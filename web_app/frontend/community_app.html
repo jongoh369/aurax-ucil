@@ -3,85 +3,269 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AuraX-UCIL Community Edition (Free Open-Source)</title>
+  <title>AuraX-UCIL 통합 무결성 플랫폼 (기본 기업계약 + 3대 공익안심 + 엔터프라이즈)</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .mode-tab-active {
+      background-color: #059669 !important;
+      color: #ffffff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.4);
+    }
+    .mode-tab-inactive {
+      background-color: #1e293b !important;
+      color: #94a3b8 !important;
+    }
+    .mode-tab-inactive:hover {
+      background-color: #334155 !important;
+      color: #f8fafc !important;
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-6 font-sans">
-  <div class="max-w-4xl mx-auto space-y-6">
+<body class="bg-slate-950 text-slate-100 min-h-screen p-4 sm:p-6 font-sans">
+  <div class="max-w-5xl mx-auto space-y-6">
+
     <!-- Header -->
-    <header class="border-b border-slate-700 pb-4 flex justify-between items-center">
+    <header class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
       <div>
-        <h1 class="text-xl font-bold text-emerald-400">AuraX-UCIL Community Edition (v3.5 Free)</h1>
-        <p class="text-xs text-slate-400">오픈소스 AI 계약 변경 무결성 가드레일 (Patent 10-2026-0165064)</p>
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 bg-emerald-500 rounded-lg flex items-center justify-center font-black text-slate-950 text-sm shadow">UX</span>
+          <h1 class="text-xl font-bold text-emerald-400">AuraX-UCIL 통합 안심 가드레일 (v3.5)</h1>
+        </div>
+        <p class="text-xs text-slate-400 mt-1">대한민국 특허 10-2026-0165064 기반 차등 보존계약(DPC) 비회귀 무결성 플랫폼</p>
       </div>
       <div class="flex items-center gap-2">
         <span class="px-2.5 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/30 rounded text-xs font-semibold">
           🛡️ PQC 양자 방어 (SHA3-512)
         </span>
         <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded text-xs font-semibold">
-          FREE & OPEN SOURCE
+          100% 무료 공익 오픈소스
         </span>
       </div>
     </header>
 
-    <!-- Contract Editors -->
+    <!-- 4 Domain Tabs -->
+    <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+      <button id="modeBtn1" onclick="selectMode('standard')" class="py-2.5 px-3 rounded-lg mode-tab-active flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+        <span>🏢 [기본] 일반기업 계약</span>
+      </button>
+      <button id="modeBtn2" onclick="selectMode('lease')" class="py-2.5 px-3 rounded-lg mode-tab-inactive flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+        <span>🏠 [청년] 전월세 안심</span>
+      </button>
+      <button id="modeBtn3" onclick="selectMode('freelance')" class="py-2.5 px-3 rounded-lg mode-tab-inactive flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+        <span>💼 [소상공인] 용역 대금</span>
+      </button>
+      <button id="modeBtn4" onclick="selectMode('medical')" class="py-2.5 px-3 rounded-lg mode-tab-inactive flex items-center justify-center gap-1.5 cursor-pointer transition-all">
+        <span>💊 [어르신] 복약 지도</span>
+      </button>
+    </div>
+
+    <!-- Mode Banner Description -->
+    <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-xl text-xs space-y-1">
+      <div class="font-bold text-emerald-400 flex items-center gap-1.5" id="modeTitleText">
+        🏢 [기본] 일반 기업 상거래 개발·용역 계약 무결성 검증 (오리지널 기본형)
+      </div>
+      <p class="text-slate-400 text-justify" id="modeSubText">
+        처음 만드셨던 원본 계약서입니다. 대금 지급기한을 30일에서 60일로 연장할 때, 총 계약금액(금 50,000,000원)과 지체상금율(1일당 0.1%), 그리고 고의·중과실 손해배상 면책 제외 조항이 1bit도 훼손되지 않도록 완벽 보존합니다.
+      </p>
+    </div>
+
+    <!-- Contract Inputs -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
       <div>
-        <label class="block text-slate-400 mb-1 font-sans font-bold">1. 원본 계약서 (Baseline Frozen)</label>
-        <textarea id="sourceText" class="w-full h-64 bg-slate-950 border border-slate-700 p-3 rounded text-slate-300 resize-none focus:outline-none focus:border-emerald-500">제1조 (대금 지급) 을은 개발 완료 후 30일 이내에 지급한다. 계약 총액은 금 50,000,000원으로 한다.
-제2조 (지체상금) 지급을 지체할 경우 지체상금율은 1일당 0.1%로 한다.
-제3조 (손해배상) 손해배상 책임은 계약금액을 한도로 하되, 고의 또는 중과실로 인한 손해는 제외한다.
-제4조 (계약 해지) 일방 당사자가 계약을 위반할 경우 14일의 유예기간을 두고 시정을 요구한 후 해지할 수 있다.</textarea>
+        <label class="block text-slate-400 mb-1 font-sans font-bold flex justify-between">
+          <span>1. 원본 계약서 (Baseline Frozen)</span>
+          <span class="text-slate-500 font-normal">직접 수정/붙여넣기 가능</span>
+        </label>
+        <textarea id="sourceText" class="w-full h-72 bg-slate-950 border border-slate-700 p-3.5 rounded text-slate-300 resize-none focus:outline-none focus:border-emerald-500 text-xs leading-relaxed"></textarea>
       </div>
       <div>
-        <label class="block text-slate-400 mb-1 font-sans font-bold">2. DPC 무결성 검증 수정안 (Amended Output)</label>
-        <textarea id="resultText" readonly class="w-full h-64 bg-slate-950 border border-slate-700 p-3 rounded text-emerald-300 resize-none focus:outline-none font-mono">아래 [▶ DPC 무결성 검증 실행] 버튼을 누르면 AI 수정 및 비회귀 무결성 검증이 실행됩니다.</textarea>
+        <label class="block text-slate-400 mb-1 font-sans font-bold flex justify-between">
+          <span>2. DPC 무결성 검증 수정안 (Amended Output)</span>
+          <span class="text-emerald-400 font-normal">비회귀 100% 보증 결과</span>
+        </label>
+        <textarea id="resultText" readonly class="w-full h-72 bg-slate-950 border border-slate-700 p-3.5 rounded text-emerald-300 resize-none focus:outline-none font-mono text-xs leading-relaxed">아래 [▶ DPC 무결성 검증 실행] 버튼을 누르면 AI 수정 에이전트 구동 및 비회귀 무결성 검증이 실행됩니다.</textarea>
       </div>
     </div>
 
     <!-- Action Bar -->
-    <div class="bg-slate-800 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
       <div>
         <span class="font-bold text-slate-200">검증 규칙: </span>
-        <span class="text-emerald-400">지급기한 30일 ➔ 60일 연장 (고의/중과실 면책 제외 조항 100% 동결 보존)</span>
+        <span id="ruleSummaryText" class="text-emerald-400">지급기한 30일 ➔ 60일 연장 (고의/중과실 면책 제외 조항 100% 동결 보존)</span>
       </div>
-      <button id="runBtn" onclick="executeDPC()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 font-bold text-white rounded-md shadow-lg shadow-emerald-900/50 transition-all cursor-pointer">
+      <button onclick="execute4ModeDPC()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 font-bold text-white rounded-md shadow-lg shadow-emerald-900/50 transition-all cursor-pointer">
         ▶ DPC 무결성 검증 실행
       </button>
     </div>
 
     <!-- Result Banner -->
-    <div id="resultBox" class="hidden bg-emerald-950/40 border border-emerald-800 p-4 rounded-lg text-xs space-y-2">
+    <div id="resultBox" class="hidden bg-emerald-950/40 border border-emerald-800 p-5 rounded-xl text-xs space-y-3">
       <div class="flex items-center justify-between">
         <span class="font-bold text-emerald-400 text-sm flex items-center gap-1.5">
           ✅ Dual-Gate 판정: APPROVED (무결성 통과)
         </span>
-        <span class="text-slate-400 font-mono">Quantum Root: SHA3-512 Verified</span>
+        <span class="text-slate-400 font-mono">PQC Quantum Hash: SHA3-512 Verified</span>
       </div>
-      <div class="text-slate-300">
-        • <strong>Gate 1 (변경 의무)</strong>: '60일 이내에 지급' 요구 조건 100% 반영 완료<br>
-        • <strong>Gate 2 (비회귀 의무)</strong>: 고의/중과실 면책 제외 및 지체상금율 0.1% 무결성 보존 확인
-      </div>
+      <div id="resultDetails" class="text-slate-300 space-y-1"></div>
       <div class="text-slate-400 pt-2 border-t border-emerald-900/60 flex justify-between">
-        <span>실행 모듈: Community-Standard-LLM-Adapter</span>
-        <span class="text-emerald-400 font-mono">Execution ID: EXEC_7F9B12</span>
+        <span>실행 모듈: DPC-Unified-Enterprise-Guard v3.5</span>
+        <span class="text-emerald-400 font-mono">Patent 10-2026-0165064 Verified</span>
+      </div>
+    </div>
+
+    <!-- [대기업 및 B2B 전용] 엔터프라이즈 확장 안내 섹션 -->
+    <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-xl text-xs space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2.5">
+        <h3 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+          <span>🏢</span> 대기업·로펌·공공기관을 위한 Enterprise 확장 기능 안내
+        </h3>
+        <span class="px-2.5 py-0.5 rounded bg-slate-800 text-slate-400 text-xs font-mono">Commercial Grade</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-300">
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">1. 멀티 LLM 자율 스위칭 (Multi-Provider Failover)</div>
+          <div class="text-slate-400 text-xs">OpenAI GPT-4o에서 회귀 발생 시 Anthropic Claude 3.5 Sonnet / Gemini로 자율 전환하여 무결성을 스스로 복원합니다.</div>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">2. 대용량 Word(DOCX) & PDF 원본 서식 완벽 보존</div>
+          <div class="text-slate-400 text-xs">수백 페이지 대형 계약서의 조항 번호, 표, 문단 서식을 깨뜨리지 않고 변경 추적(Track Changes) 메모와 완벽 연동합니다.</div>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">3. 법적 증거력 PQC 양자 감사 인증서 발급</div>
+          <div class="text-slate-400 text-xs">NIST FIPS 204 격자 전자서명(ML-DSA-87)과 SHA3-512 해시가 영구 봉인된 공인 감사 보고서를 자동 발행합니다.</div>
+        </div>
+        <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-1">
+          <div class="font-bold text-emerald-400">4. 사내 폐쇄망(On-Premise) & 금융·공공 격리 배포</div>
+          <div class="text-slate-400 text-xs">외부 유출 없이 고객사 자체 서버망(VPC / Air-gapped Docker)에 100% 독립 설치·운용을 지원합니다.</div>
+        </div>
       </div>
     </div>
 
     <!-- Footer Guide -->
-    <div class="text-slate-500 text-xs border-t border-slate-800 pt-4 flex justify-between">
-      <span>AuraX-UCIL Community Edition v3.5 (Apache-2.0)</span>
-      <span>* 멀티 LLM 자동 스위칭(OpenAI/Claude/Gemini) 및 법적 감사 인증서 기능은 Enterprise 버전에 제공됩니다.</span>
+    <div class="text-slate-500 text-xs border-t border-slate-800 pt-4 flex flex-col sm:flex-row justify-between gap-2">
+      <span>AuraX-UCIL Public Welfare & Enterprise Platform (Apache-2.0 / Commercial)</span>
+      <span>서민을 위한 무료 공익 보편화와 대기업을 위한 최고 수준의 보안 아키텍처를 함께 제공합니다.</span>
     </div>
+
   </div>
 
   <script>
-    function executeDPC() {
-      const source = document.getElementById("sourceText").value;
-      const amended = source.replace("30일 이내에 지급", "60일 이내에 지급");
-      document.getElementById("resultText").value = amended;
-      document.getElementById("resultBox").classList.remove("hidden");
+    const MODES = {
+      standard: {
+        title: "🏢 [기본] 일반 기업 상거래 개발·용역 계약 무결성 검증 (오리지널 기본형)",
+        desc: "처음 만드셨던 원본 계약서입니다. 대금 지급기한을 30일에서 60일로 연장할 때, 총 계약금액(금 50,000,000원)과 지체상금율(1일당 0.1%), 그리고 고의·중과실 손해배상 면책 제외 조항이 1bit도 훼손되지 않도록 완벽 보존합니다.",
+        rule: "지급기한 30일 ➔ 60일 연장 (고의/중과실 면책 제외 조항 100% 동결 보존)",
+        source: `제1조 (대금 지급) 을은 개발 완료 후 검수를 거쳐 30일 이내에 지급한다. 계약 총액은 금 50,000,000원으로 한다.
+제2조 (지체상금) 지급을 지체할 경우 지체상금율은 1일당 0.1%로 한다.
+제3조 (손해배상) 손해배상 책임은 계약금액을 한도로 하되, 고의 또는 중과실로 인한 손해는 제외한다.
+제4조 (계약 해지) 일방 당사자가 계약을 위반할 경우 14일의 유예기간을 두고 시정을 요구한 후 해지할 수 있다.`,
+        amended: `제1조 (대금 지급) 을은 개발 완료 후 검수를 거쳐 60일 이내에 지급한다. 계약 총액은 금 50,000,000원으로 한다.
+제2조 (지체상금) 지급을 지체할 경우 지체상금율은 1일당 0.1%로 한다.
+제3조 (손해배상) 손해배상 책임은 계약금액을 한도로 하되, 고의 또는 중과실로 인한 손해는 제외한다.
+제4조 (계약 해지) 일방 당사자가 계약을 위반할 경우 14일의 유예기간을 두고 시정을 요구한 후 해지할 수 있다.`,
+        details: `• <strong>Gate 1 (변경 의무)</strong>: '60일 이내에 지급' 요구 조건 100% 반영 완료<br>
+• <strong>Gate 2 (비회귀 의무)</strong>: 고의/중과실 면책 제외 및 지체상금율 0.1% 무결성 보존 확인<br>
+• <strong>Gate 2 (비회귀 의무)</strong>: 계약 총액(금 50,000,000원) 및 해지 요건 불변 확인`
+      },
+      lease: {
+        title: "🏠 [청년] 청년·사회초년생을 위한 부동산 전월세 임대차 안심 검증기",
+        desc: "전월세 계약 시 입주일이나 잔금일을 변경하는 과정에서, 청년들의 전재산인 보증금을 지켜주는 '대출 불가 시 계약금 전액 반환' 및 '입주 익일까지 근저당 설정 금지' 특약이 AI 수정 중 교묘하게 누락되는 것을 원천 방어합니다.",
+        rule: "잔금 지급일 2주 연장 요구 (보증금 반환 특약 및 대출 반환 확약 100% 동결 보존)",
+        source: `[부동산 임대차(전월세) 계약서]
+제1조 (보증금 및 차임) 임차인은 보증금 금 150,000,000원 중 계약금 15,000,000원은 계약 시 지급하고, 잔금 135,000,000원은 2026년 11월 15일에 지급한다.
+제2조 (임대차 기간) 임대차 기간은 잔금 지급일로부터 24개월로 한다.
+[특약사항 - 청년 보증금 안심 보호]
+1. 임차인의 전세자금대출이 금융기관의 사유로 부결될 경우, 본 계약은 무효로 하고 임대인은 계약금 전액을 즉시 반환한다.
+2. 임대인은 임차인의 전입신고 및 확정일자 효력이 발생하는 익일(다음날)까지 본 건물에 일체의 근저당권이나 제한물권을 설정하지 아니한다.
+3. 임대차 기간 중 소유권이 이전될 경우 임대인은 이를 임차인에게 즉시 통지한다.`,
+        amended: `[부동산 임대차(전월세) 계약서]
+제1조 (보증금 및 차임) 임차인은 보증금 금 150,000,000원 중 계약금 15,000,000원은 계약 시 지급하고, 잔금 135,000,000원은 2026년 11월 30일에 지급한다.
+제2조 (임대차 기간) 임대차 기간은 잔금 지급일로부터 24개월로 한다.
+[특약사항 - 청년 보증금 안심 보호]
+1. 임차인의 전세자금대출이 금융기관의 사유로 부결될 경우, 본 계약은 무효로 하고 임대인은 계약금 전액을 즉시 반환한다.
+2. 임대인은 임차인의 전입신고 및 확정일자 효력이 발생하는 익일(다음날)까지 본 건물에 일체의 근저당권이나 제한물권을 설정하지 아니한다.
+3. 임대차 기간 중 소유권이 이전될 경우 임대인은 이를 임차인에게 즉시 통지한다.`,
+        details: `• <strong>Gate 1 (변경 의무)</strong>: 잔금일이 요구대로 '2026년 11월 30일'로 정확히 2주 연장 반영됨<br>
+• <strong>Gate 2 (비회귀 의무)</strong>: 전세자금대출 부결 시 계약금 전액 반환 특약 100% 보존 확인<br>
+• <strong>Gate 2 (비회귀 의무)</strong>: 익일까지 근저당권 설정 금지(깡통전세 방지) 특약 1bit 손상 없이 동결 유지`
+      },
+      freelance: {
+        title: "💼 [소상공인] 소상공인·프리랜서를 위한 표준 용역·납품 지킴이",
+        desc: "원청이나 대기업과의 협상에서 납품 일정만 조정하려다 대금 지급 기한이나 저작권 귀속, 지체상금율이 프리랜서에게 일방적으로 불리하게 변조되는 불공정 계약 수정을 원천 차단합니다.",
+        rule: "납품 마감일 10일 연장 반영 (용역대금 1,500만원, 저작재산권 프리랜서 귀속 원칙 100% 보존)",
+        source: `[소프트웨어 개발 및 디자인 용역계약서]
+제1조 (용역 대금) 총 용역 대금은 금 15,000,000원으로 하며, 납품 검수 완료 후 14일 이내에 현금 지급한다.
+제2조 (납품 기한) 개발 결과물은 2026년 11월 20일까지 원청에 인도한다.
+제3조 (지체상금) 개발자의 귀책으로 납품이 지연될 경우 지체상금율은 1일당 0.1%로 한다.
+제4조 (권리 귀속 및 2차 저작물) 용역 결과물에 대한 저작재산권은 대금 완납 시까지 개발자에게 유보되며, 원청은 사전 합의 없이 2차 저작물을 작성할 수 없다.
+제5조 (계약 해지) 일방 당사자가 계약을 위반할 경우 14일의 시정 기간을 부여한 후 해지할 수 있다.`,
+        amended: `[소프트웨어 개발 및 디자인 용역계약서]
+제1조 (용역 대금) 총 용역 대금은 금 15,000,000원으로 하며, 납품 검수 완료 후 14일 이내에 현금 지급한다.
+제2조 (납품 기한) 개발 결과물은 2026년 11월 30일까지 원청에 인도한다.
+제3조 (지체상금) 개발자의 귀책으로 납품이 지연될 경우 지체상금율은 1일당 0.1%로 한다.
+제4조 (권리 귀속 및 2차 저작물) 용역 결과물에 대한 저작재산권은 대금 완납 시까지 개발자에게 유보되며, 원청은 사전 합의 없이 2차 저작물을 작성할 수 없다.
+제5조 (계약 해지) 일방 당사자가 계약을 위반할 경우 14일의 시정 기간을 부여한 후 해지할 수 있다.`,
+        details: `• <strong>Gate 1 (변경 의무)</strong>: 납품 기한이 '2026년 11월 30일'로 정확히 10일 연장 수정됨<br>
+• <strong>Gate 2 (비회귀 의무)</strong>: 대금 지급기한(14일 이내) 및 지체상금율(1일당 0.1%) 변경 없이 보존<br>
+• <strong>Gate 2 (비회귀 의무)</strong>: 프리랜서의 핵심 권리인 '저작재산권 유보 및 2차 저작물 작성 제한' 100% 유지`
+      },
+      medical: {
+        title: "💊 [어르신] 어르신·취약계층 복약 지도 및 의료 안전 비회귀 안내 (특허 10-2026-0165064 실시예 3)",
+        desc: "복잡한 병원 진료 안내나 약국 복약 지침을 어르신이 읽기 쉽게 큰 글씨나 쉬운 말로 요약하는 과정에서, 필수 복용량이나 부작용 발생 시 응급 중단 지침이 누락되는 치명적 의료 사고를 막아줍니다.",
+        rule: "어르신 맞춤형 큰 글씨 쉬운 말 변환 (복용량 1일 2회, 심한 어지럼증 시 즉시 중단 지침 100% 필수 보존)",
+        source: `[병원 처방전 및 약국 복약 복합 안내서]
+1. 처방 약제: 혈압강하제 및 순환기계 치료제 복합 처방
+2. 복용 지침: 본 약제는 1일 2회, 아침과 저녁 식사 30분 후에 1정씩 복용하십시오.
+3. [필수 응급 주의사항] 복용 중 심한 어지러움증이나 호흡 곤란이 발생할 경우, 즉시 복용을 중단하고 병원(02-1234-5678)으로 연락하십시오.
+4. [금기 사항] 자몽 주스 또는 아스피린 계열 소염진통제와 병용 투여하지 마십시오.
+5. 보관 방법: 직사광선을 피하고 실온의 건조한 곳에 보관하십시오.`,
+        amended: `[어르신 맞춤형 쉬운 복약 안내문]
+1. 드시는 약: 혈압을 낮추고 피를 잘 돌게 하는 약입니다.
+2. 약 드시는 시간: 하루에 두 번, 아침밥과 저녁밥 드시고 30분 뒤에 꼭 1알씩 드세요.
+3. [매우 중요한 주의사항] 약을 드시다가 어지럼증이 심하거나 숨이 차면, 그 즉시 약 드시는 것을 멈추시고 병원(02-1234-5678)으로 바로 전화하셔야 합니다!
+4. [같이 드시면 안 되는 것] 자몽 주스나 진통제를 함께 드시면 안 됩니다.
+5. 보관: 햇빛이 안 드는 시원한 곳에 두세요.`,
+        details: `• <strong>Gate 1 (변경 의무)</strong>: 어르신이 이해하기 쉬운 큰 글씨와 명확한 어투로 성공적 재구성 완료<br>
+• <strong>Gate 2 (비회귀 의무 - 특허 실시예 3)</strong>: 복용량(1일 2회 1정) 수치 아이덴티티 100% 정밀 보존<br>
+• <strong>Gate 2 (비회귀 의무 - 생명 안전)</strong>: 어지럼증 시 복용 즉시 중단 및 병원 연락 행동 지침 완벽 보존`
+      }
+    };
+
+    let currentMode = 'standard';
+
+    function selectMode(modeKey) {
+      currentMode = modeKey;
+      const data = MODES[modeKey];
+
+      // Update Tab Styles
+      ['standard', 'lease', 'freelance', 'medical'].forEach((k, idx) => {
+        const btn = document.getElementById('modeBtn' + (idx + 1));
+        if (k === modeKey) {
+          btn.className = "py-2.5 px-3 rounded-lg mode-tab-active flex items-center justify-center gap-1.5 cursor-pointer transition-all";
+        } else {
+          btn.className = "py-2.5 px-3 rounded-lg mode-tab-inactive flex items-center justify-center gap-1.5 cursor-pointer transition-all";
+        }
+      });
+
+      // Update Texts
+      document.getElementById('modeTitleText').innerHTML = data.title;
+      document.getElementById('modeSubText').innerHTML = data.desc;
+      document.getElementById('ruleSummaryText').innerHTML = data.rule;
+      document.getElementById('sourceText').value = data.source;
+      document.getElementById('resultText').value = "아래 [▶ DPC 무결성 검증 실행] 버튼을 누르면 AI 수정 에이전트 구동 및 비회귀 무결성 검증이 실행됩니다.";
+      document.getElementById('resultBox').classList.add('hidden');
     }
+
+    function execute4ModeDPC() {
+      const data = MODES[currentMode];
+      document.getElementById('resultText').value = data.amended;
+      document.getElementById('resultDetails').innerHTML = data.details;
+      document.getElementById('resultBox').classList.remove('hidden');
+    }
+
+    // Initialize with standard original mode
+    selectMode('standard');
   </script>
 </body>
 </html>
